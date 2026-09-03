@@ -1,19 +1,6 @@
 {
     "llm_config": {
-        "fallbacks": [
-            {
-                # Gemini first.
-
-                "class": "gemini",
-                "model_name": "gemini-3-flash"
-            },
-            {
-                # Fall back to Mistral if gemini is unavailable. 
-
-                "class": "langchain_mistralai.chat_models.ChatMistralAI",
-                "model": "mistral-medium-latest",
-                "temperature": 0
-            }
-        ]
+        "model_name": "gemini-3.6-flash"
+        "temperature": 0.3
     }
 }
