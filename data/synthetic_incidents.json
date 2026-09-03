@@ -1,0 +1,82 @@
+[
+    {
+        "incident_id": "INC-001",
+        "description": "Batch job nightly_claims_load failed with connection timeout error while writing to claims_processing database",
+        "root_cause": "Database connection pool exhaustion during peak nightly batch window",
+        "root_cause_category": "db_connection_pool",
+        "resolution": "Increased connection pool size from 10 to 25 and staggered batch job start times",
+        "responsible_team": "Database Operations",
+        "estimated_resolution_time_hours": 2,
+        "date": "2026-05-14"
+    },
+    {
+        "incident_id": "INC-002",
+        "description": "Underwriting exception queue stuck, batch job underwriting_risk_scoring timed out connecting to database",
+        "root_cause": "Database connection pool exhaustion, same root cause as INC-001",
+        "root_cause_category": "db_connection_pool",
+        "resolution": "Applied same connection pool fix as INC-001",
+        "responsible_team": "Database Operations",
+        "estimated_resolution_time_hours": 1,
+        "date": "2026-05-30"
+    },
+    {
+        "incident_id": "INC-003",
+        "description": "Policy renewal batch job failed overnight, database connections exhausted during month end processing",
+        "root_cause": "Database connection pool exhaustion during month-end peak load",
+        "root_cause_category": "db_connection_pool",
+        "resolution": "Temporary workaround: restarted batch job with reduced parallelism",
+        "responsible_team": "Database Operations",
+        "estimated_resolution_time_hours": 3,
+        "date": "2026-06-28"
+    },
+    {
+        "incident_id": "INC-004",
+        "description": "Claim status update failed to sync to customer portal after adjuster approval",
+        "root_cause": "Message queue consumer service crashed silently, messages backed up unprocessed",
+        "root_cause_category": "message_queue_failure",
+        "resolution": "Restarted consumer service and added health check monitoring",
+        "responsible_team": "Claims Integration Team",
+        "estimated_resolution_time_hours": 4,
+        "date": "2026-06-02"
+    },
+    {
+        "incident_id": "INC-005",
+        "description": "Customer notification emails for policy renewal not sent, queue backing up",
+        "root_cause": "Message queue consumer service crashed, same failure mode as INC-004",
+        "root_cause_category": "message_queue_failure",
+        "resolution": "Applied same consumer restart fix, escalated for permanent monitoring fix",
+        "responsible_team": "Claims Integration Team",
+        "estimated_resolution_time_hours": 2,
+        "date": "2026-07-10"
+    },
+    {
+        "incident_id": "INC-006",
+        "description": "Underwriting risk scoring batch produced incorrect scores for a subset of commercial policies",
+        "root_cause": "Third-party credit risk API returned malformed response, not caught by validation layer",
+        "root_cause_category": "external_api_validation_gap",
+        "resolution": "Added response schema validation before scores are committed",
+        "responsible_team": "Underwriting Systems",
+        "estimated_resolution_time_hours": 6,
+        "date": "2026-06-20"
+    },
+    {
+        "incident_id": "INC-007",
+        "description": "New claim submissions rejected with generic validation error, no clear cause in logs",
+        "root_cause": "Unknown - insufficient logging detail, root cause never fully confirmed",
+        "root_cause_category": "unresolved_low_confidence",
+        "resolution": "Temporary manual override applied by support team, root cause investigation deprioritized",
+        "responsible_team": "Claims Processing Support",
+        "estimated_resolution_time_hours": 8,
+        "date": "2026-07-22"
+    },
+    {
+        "incident_id": "INC-008",
+        "description": "Policy document generation batch failed for a small number of auto insurance policies",
+        "root_cause": "PDF template engine ran out of memory processing an unusually large policy document",
+        "root_cause_category": "document_generation_memory",
+        "resolution": "Increased memory allocation for the PDF generation service",
+        "responsible_team": "Policy Document Services",
+        "estimated_resolution_time_hours": 3,
+        "date": "2026-06-05"
+    }
+]
