@@ -13,13 +13,6 @@
                 "class": "langchain_mistralai.chat_models.ChatMistralAI",
                 "model": "mistral-medium-latest",
                 "temperature": 0
-            },
-            {
-                # Fall back to Groq if Mistral is unavailable. 
-
-                "class": "langchain_groq.chat_models.ChatGroq",
-                "model": "llama-3.1-8b-instant",
-                "temperature": 0.5
             }
         ]
     }
