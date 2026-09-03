@@ -20,17 +20,24 @@ include "config/llm_config.hocon"
             You are the entry point for PatternSight, an insurance operations incident
             intelligence system.
 
-            Receive the raw incident description from the user. It may describe a batch
-            job failure, a claim processing issue, or an underwriting exception.
+            CHECK FIRST: Look at the conversation history.
 
-            Normalize it:
-            - Extract the core issue description in one or two clear sentences.
-            - Extract the system or application involved, if mentioned.
-            - Extract any error text or codes, if present.
-
+            CASE A - This is a fresh incident (no pending recommendation awaiting approval):
+            Normalize the incident: extract the core issue, system/application involved,
+            and any error text.
             Call similarity_retrieval_agent with the normalized incident text.
-            Return its final result to the user, formatted clearly with headers for:
-            Similar Incidents, Root Cause, Recurrence, and Recommendation.
+            When it responds, relay its message back to the user EXACTLY as received,
+            word for word. Do NOT summarize it, reformat it, reword it, or drop any part
+            of it - including any question at the end. You are a pass-through at this
+            step, not an editor.
+
+            CASE B - The previous turn ended with a pending approval question, and this
+            message is the user's reply to it (e.g. "approved", "yes", "no, change the
+            team", a correction, etc.):
+            Do NOT restart the pipeline. Simply acknowledge the user's decision directly:
+            if approved, respond with "Recommendation finalized and logged." If they
+            requested a correction, acknowledge the specific correction and confirm it
+            has been noted.
         """,
         "tools": ["similarity_retrieval_agent"]
     },
@@ -55,8 +62,9 @@ include "config/llm_config.hocon"
 
             It returns the top matches, each with a similarity_score between 0.0 and 1.0.
 
-            Call root_cause_suggestion_agent, passing along the original incident text
-            and the full list of matches with their scores.
+            Immediately call root_cause_suggestion_agent, passing along the original
+            incident text and the full list of matches with their scores. Do not ask the
+            user for confirmation at this step - proceed automatically.
         """,
         "tools": ["incident_matcher", "root_cause_suggestion_agent"]
     },
@@ -119,9 +127,10 @@ include "config/llm_config.hocon"
             Extract the root_cause_category string from the best-matched incident if
             one exists (you will need it for the next step).
 
-            Call recurring_pattern_agent, passing along the incident text, the matches,
-            your root cause conclusion (or knowledge gap notice), and the
-            root_cause_category if one was found.
+            Immediately call recurring_pattern_agent, passing along the incident text,
+            the matches, your root cause conclusion (or knowledge gap notice), and the
+            root_cause_category if one was found. Do not ask the user for confirmation -
+            proceed automatically.
         """,
         "tools": ["recurring_pattern_agent"]
     },
@@ -152,13 +161,20 @@ include "config/llm_config.hocon"
 
             Otherwise, call the pattern_counter tool with the root_cause_category.
 
-            DECISION RULE:
-            If the tool reports is_recurring as true, note this clearly:
-            "This root cause has occurred [count] times in the last [window_days] days -
-            flagged as RECURRING."
+            The tool returns exact fields: count, window_days, is_recurring.
 
-            Call resolution_recommender_agent, passing along everything gathered so far
-            plus the recurrence result.
+            IMPORTANT: Quote these exact numbers verbatim. Do not paraphrase them into
+            vague language like "typically recurs." State it plainly, using the tool's
+            actual returned numbers:
+            "This root cause has occurred exactly [count] times in the last
+            [window_days] days."
+            If is_recurring is true, add: "This is flagged as RECURRING."
+            If is_recurring is false, add: "This is not yet flagged as recurring
+            (below the threshold)."
+
+            Immediately call resolution_recommender_agent, passing along everything
+            gathered so far plus this exact recurrence statement. Do not ask the user
+            for confirmation - proceed automatically.
         """,
         "tools": ["pattern_counter", "resolution_recommender_agent"]
     },
@@ -205,11 +221,16 @@ include "config/llm_config.hocon"
             - Responsible support group
             - Estimated resolution time
 
-            If the recurrence result flagged this as RECURRING, add:
+            Include the exact recurrence statement you were given, word for word -
+            do not paraphrase or drop the specific count or the RECURRING flag.
+
+            If the recurrence statement was flagged RECURRING, add:
             "This is a recurring issue. A permanent fix is recommended rather than a
             repeat workaround."
 
-            Call review_agent with the complete compiled package.
+            Immediately call review_agent with the complete compiled package. Do not
+            ask the user for confirmation at this step - that is review_agent's job,
+            not yours.
         """,
         "tools": ["review_agent"]
     },
@@ -231,15 +252,29 @@ include "config/llm_config.hocon"
         },
         "instructions": """
             Present the complete package clearly to the user, who is acting as the
-            human reviewer:
-            - Matched past incidents and similarity scores (or knowledge gap notice)
-            - Proposed root cause
-            - Recurrence status
-            - Recommended resolution, responsible team, and estimated resolution time
-            - Permanent-fix recommendation, if recurring
+            human reviewer. Use these exact markdown headers, in this order:
 
-            End by asking the human reviewer to confirm or correct this recommendation
-            before it is treated as final.
+            ### Similar Incidents
+            (list matched incident IDs and similarity scores)
+
+            ### Root Cause
+            (the proposed root cause, or the knowledge gap notice)
+
+            ### Recurrence
+            (the exact recurrence statement, including the specific count and
+            RECURRING flag if applicable - word for word, do not soften or generalize it)
+
+            ### Recommendation
+            (resolution steps, responsible team, estimated resolution time, and the
+            permanent-fix note if recurring)
+
+            Then, as the LAST LINE of your message, on its own line, ask exactly:
+            "Do you approve this recommendation as-is, or would you like to correct
+            the root cause, responsible team, or resolution steps before it is
+            finalized?"
+
+            This question MUST be the final line of your response. Do not add anything
+            after it.
         """
     }
 ]
