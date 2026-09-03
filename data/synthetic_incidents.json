@@ -78,5 +78,125 @@
         "responsible_team": "Policy Document Services",
         "estimated_resolution_time_hours": 3,
         "date": "2026-06-05"
+    },
+    {
+        "incident_id": "INC-009",
+        "description": "Batch job commercial_policy_load failed, database connection pool exhausted during high concurrency load",
+        "root_cause": "Database connection pool exhaustion, fourth occurrence of same underlying issue",
+        "root_cause_category": "db_connection_pool",
+        "resolution": "Escalated for permanent fix: connection pool size increase deployed cluster-wide",
+        "responsible_team": "Database Operations",
+        "estimated_resolution_time_hours": 1,
+        "date": "2026-07-30"
+    },
+    {
+        "incident_id": "INC-010",
+        "description": "Agent portal login failures reported by multiple regional offices simultaneously",
+        "root_cause": "Identity provider certificate expired without automated renewal alert firing",
+        "root_cause_category": "auth_certificate_expiry",
+        "resolution": "Renewed certificate manually and added expiry monitoring alert 30 days in advance",
+        "responsible_team": "Identity & Access Management",
+        "estimated_resolution_time_hours": 2,
+        "date": "2026-06-11"
+    },
+    {
+        "incident_id": "INC-011",
+        "description": "Claims adjuster dashboard showing stale data, records not reflecting recent updates",
+        "root_cause": "Cache invalidation job failed to trigger after database writes, serving stale cached data",
+        "root_cause_category": "cache_invalidation_failure",
+        "resolution": "Manually flushed cache and fixed the invalidation trigger condition",
+        "responsible_team": "Platform Engineering",
+        "estimated_resolution_time_hours": 3,
+        "date": "2026-07-05"
+    },
+    {
+        "incident_id": "INC-012",
+        "description": "Auto insurance quote calculation returning inconsistent premiums for identical inputs",
+        "root_cause": "Race condition in the rating engine when multiple rating factors update concurrently",
+        "root_cause_category": "rating_engine_race_condition",
+        "resolution": "Added locking around the rating factor update path, deployed hotfix",
+        "responsible_team": "Rating Engine Team",
+        "estimated_resolution_time_hours": 10,
+        "date": "2026-06-25"
+    },
+    {
+        "incident_id": "INC-013",
+        "description": "Batch job home_policy_renewal timed out, connection pool for policy database exhausted overnight",
+        "root_cause": "Database connection pool exhaustion, related to nightly batch overlap",
+        "root_cause_category": "db_connection_pool",
+        "resolution": "Same fix pattern as prior connection pool incidents, permanent pool size increase already partially rolled out",
+        "responsible_team": "Database Operations",
+        "estimated_resolution_time_hours": 1,
+        "date": "2026-08-02"
+    },
+    {
+        "incident_id": "INC-014",
+        "description": "Claim payout batch job processed duplicate payments for a small set of claims",
+        "root_cause": "Idempotency key check missing on retry logic after a transient network failure",
+        "root_cause_category": "payment_idempotency_gap",
+        "resolution": "Added idempotency key validation before payout execution, reconciled duplicate payments",
+        "responsible_team": "Payments Engineering",
+        "estimated_resolution_time_hours": 12,
+        "date": "2026-06-18"
+    },
+    {
+        "incident_id": "INC-015",
+        "description": "Underwriting exception dashboard not loading, blank page reported by multiple underwriters",
+        "root_cause": "Frontend build deployed with a broken JavaScript bundle reference",
+        "root_cause_category": "frontend_deployment_error",
+        "resolution": "Rolled back to previous frontend build, fixed bundle reference in next release",
+        "responsible_team": "Underwriting Systems",
+        "estimated_resolution_time_hours": 1,
+        "date": "2026-07-15"
+    },
+    {
+        "incident_id": "INC-016",
+        "description": "Claims document upload feature failing for files larger than 10MB",
+        "root_cause": "Reverse proxy request size limit set too low after a recent infrastructure change",
+        "root_cause_category": "proxy_config_limit",
+        "resolution": "Increased max request body size on the reverse proxy configuration",
+        "responsible_team": "Platform Engineering",
+        "estimated_resolution_time_hours": 2,
+        "date": "2026-07-28"
+    },
+    {
+        "incident_id": "INC-017",
+        "description": "Commercial underwriting batch failed, connection pool for underwriting database exhausted during nightly run",
+        "root_cause": "Database connection pool exhaustion, sixth occurrence, root cause well understood but permanent fix rollout incomplete",
+        "root_cause_category": "db_connection_pool",
+        "resolution": "Manual restart with reduced concurrency as an interim fix pending full rollout",
+        "responsible_team": "Database Operations",
+        "estimated_resolution_time_hours": 1,
+        "date": "2026-08-10"
+    },
+    {
+        "incident_id": "INC-018",
+        "description": "Customer complaint that policy cancellation confirmation was never received",
+        "root_cause": "Message queue consumer for notification service crashed again",
+        "root_cause_category": "message_queue_failure",
+        "resolution": "Restarted consumer, permanent monitoring fix from INC-005 escalation still pending full deployment",
+        "responsible_team": "Claims Integration Team",
+        "estimated_resolution_time_hours": 2,
+        "date": "2026-08-01"
+    },
+    {
+        "incident_id": "INC-019",
+        "description": "Fraud detection scoring service returning null scores for a subset of new claims submitted overnight",
+        "root_cause": "Unknown - service logs show no errors, behavior not reproducible in staging, root cause unresolved",
+        "root_cause_category": "unresolved_low_confidence",
+        "resolution": "Manual review process activated for affected claims as a stopgap; investigation ongoing",
+        "responsible_team": "Fraud Detection Team",
+        "estimated_resolution_time_hours": 15,
+        "date": "2026-08-05"
+    },
+    {
+        "incident_id": "INC-020",
+        "description": "Agent commission calculation batch produced negative commission values for a handful of policies",
+        "root_cause": "Edge case in proration formula when a policy is cancelled and rewritten within the same billing cycle",
+        "root_cause_category": "commission_calculation_edge_case",
+        "resolution": "Patched proration formula to handle same-cycle cancel-and-rewrite scenarios",
+        "responsible_team": "Commissions Engineering",
+        "estimated_resolution_time_hours": 7,
+        "date": "2026-07-18"
     }
 ]
