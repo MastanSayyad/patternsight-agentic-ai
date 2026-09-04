@@ -3,7 +3,6 @@
     # The include keeps them visible to the server without editing this file by hand.
     include "registries/generated/manifest.hocon",
 
-    "music_nerd.hocon": true,
     "patternsight/patternsight.hocon": true,
 
 }
