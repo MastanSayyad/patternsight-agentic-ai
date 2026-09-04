@@ -1,6 +1,7 @@
 {
     "llm_config": {
-        "model_name": "gemini-3.6-flash"
-        "temperature": 0.3
+        "model_name": "gemini-3.6-flash",
+        "temperature": 1.0,
+        "thinking_level": "minimal"
     }
 }
