@@ -1,320 +1,262 @@
-{
-    include "config/llm_config.hocon"
+include "config/llm_config.hocon"
 
-    "metadata": {
-        "description": "PatternSight - Operational Memory and Prevention Network for Insurance Operations",
-        "tags": [
-            "insurance",
-            "root-cause-analysis",
-            "incident-intelligence",
-            "human-in-the-loop"
-        ],
-        "sample_queries": [
-            "Batch job nightly_claims_load failed with a database connection timeout.",
-            "Customer notification emails for policy renewal are not being sent."
-        ]
+"max_execution_seconds": 600,
+
+"metadata": {
+    "description": "PatternSight - an operational memory layer for insurance ops. Given a new incident, it retrieves similar past incidents, suggests a root cause, flags recurring patterns, and recommends a resolution, gated by human review.",
+    "tags": ["insurance", "incident-management", "root-cause-analysis", "human-in-the-loop"],
+    "sample_queries": [
+        "Batch job nightly_claims_load failed with a database connection timeout.",
+        "Customer notification emails for policy renewal are not being sent.",
+        "Claim processing batch job failed last night. System involved: ClaimEngine, Error Code: DB_CONN_TIMEOUT_504.",
+        "Underwriting exception detected in PolicyService: NullPointerException in RiskAssessment Module during premium calculation."
+    ]
+},
+
+"tools": [
+
+    {
+        "name": "ingestion_agent",
+        "function": {
+            "description": "Entry point for PatternSight. Receives a new incident and normalizes it before analysis."
+        },
+        "instructions": """
+            You are the entry point for PatternSight, an insurance operations incident
+            intelligence system.
+
+            TRIAGE THE MESSAGE FIRST:
+
+            CASE A - General chat, greeting, or unrelated message:
+            Reply directly yourself, briefly. Do NOT call any tool.
+
+            CASE B - This is a genuine incident description:
+            Normalize it in one sentence. Call similarity_retrieval_agent EXACTLY
+            ONCE. Do not call it again for any reason. When it responds, output its
+            message back to the user EXACTLY as received, character for character.
+            Do not summarize, reformat, reword, shorten, or add anything. Do not
+            evaluate whether its answer is good enough - simply output it verbatim
+            and stop.
+
+            CASE C - This message looks like an approval/correction reply ("approved",
+            "yes", "no", a correction):
+            FIRST CHECK: does the immediately preceding AI message in this conversation
+            actually end with the approval question ("Do you approve this
+            recommendation...")? Only if that exact question was truly just asked:
+            reply "Recommendation finalized and logged." if approved, or acknowledge
+            the correction if not.
+            If there is NO pending approval question in the conversation so far (e.g.
+            this is the first message, or the last AI message was something else),
+            treat this as CASE A instead: reply "I don't have a pending recommendation
+            to approve yet - describe an incident first and I'll analyze it."
+
+            Once you choose a case, follow it completely without switching cases or
+            reconsidering.
+        """,
+        "tools": ["similarity_retrieval_agent"]
     },
-    "tools": [
-        {
-            "name": "ingestion_agent",
-            "function": {
-                "description": "Receives an incident and starts analysis, or routes a human approval decision."
-            },
-            "instructions": """
-You are the entry point for PatternSight.
 
-If the user provides a greeting, respond briefly.
-
-If the user provides a NEW insurance-related incident:
-1. Create a concise normalized summary.
-2. Send it to similarity_retrieval_agent.
-3. Return the final analysis.
-
-If the previous assistant message presented a recommendation with a
-"### Review Decision" section, and the user's latest message is a decision
-such as "Approve", "Reject", or "Needs SME Review" (in any casing or phrasing
-close to these):
-1. Pass the user's decision, plus a short summary of the recommendation
-   being decided on, to human_approval_agent.
-2. Return its output as the final answer.
-
-Do not ask follow-up questions.
-Do not perform root cause analysis yourself.
-""",
-            "tools": [
-                "similarity_retrieval_agent",
-                "human_approval_agent"
-            ]
-        },
-        {
-            "name": "similarity_retrieval_agent",
-            "function": {
-                "description": "Retrieves similar historical incidents.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "incident_text": {
-                            "type": "string",
-                            "description": "The normalized incident description to search for."
-                        }
-                    },
-                    "required": [
-                        "incident_text"
-                    ]
-                }
-            },
-            "instructions": """
-Use incident_matcher to retrieve up to 3 similar incidents.
-Capture:
-- incident_id
-- similarity_score
-- root_cause
-- root_cause_category
-- resolution
-- responsible_team
-- estimated_resolution_time_hours
-Pass everything to root_cause_suggestion_agent.
-Do not ask the user questions.
-""",
-            "tools": [
-                "incident_matcher",
-                "root_cause_suggestion_agent"
-            ]
-        },
-        {
-            "name": "incident_matcher",
-            "function": {
-                "description": "Finds similar historical incidents using TF-IDF similarity.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "incident_text": {
-                            "type": "string",
-                            "description": "The normalized incident description to search for."
-                        },
-                        "top_k": {
-                            "type": "int",
-                            "description": "Maximum number of similar incidents to return."
-                        }
-                    },
-                    "required": [
-                        "incident_text"
-                    ]
-                }
-            },
-            "class": "incident_matcher.IncidentMatcher",
-            "args": {
-                "top_k": 3
+    {
+        "name": "similarity_retrieval_agent",
+        "function": {
+            "description": "Finds similar past incidents from the historical corpus.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incident_text": {
+                        "type": "string",
+                        "description": "The normalized incident description to search for."
+                    }
+                },
+                "required": ["incident_text"]
             }
         },
-        {
-            "name": "root_cause_suggestion_agent",
-            "function": {
-                "description": "Determines likely root cause.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "incident_text": {
-                            "type": "string",
-                            "description": "The normalized incident description."
-                        },
-                        "matches": {
-                            "type": "string",
-                            "description": "The similar historical incidents retrieved, serialized as text."
-                        }
+        "instructions": """
+            Call incident_matcher EXACTLY ONCE with the incident_text. Do not call it
+            again for any reason, even if the results seem weak - proceed with
+            whatever it returns.
+
+            Immediately after it responds, call root_cause_suggestion_agent EXACTLY
+            ONCE, passing the incident text and the matches with their scores.
+            Do not re-call incident_matcher. Do not ask the user anything. Then
+            output whatever root_cause_suggestion_agent gives you back, unchanged.
+        """,
+        "tools": ["incident_matcher", "root_cause_suggestion_agent"]
+    },
+
+    {
+        "name": "incident_matcher",
+        "function": {
+            "description": "Searches the synthetic historical incident corpus using TF-IDF similarity and returns the closest matches. Runs fully locally - no external API required.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incident_text": {
+                        "type": "string",
+                        "description": "The incident description to match against history."
                     },
-                    "required": [
-                        "incident_text",
-                        "matches"
-                    ]
-                }
-            },
-            "instructions": """
-Review the retrieved incidents.
-If no matches are found:
-Knowledge Gap:
-No sufficiently similar historical incidents found.
-Otherwise:
-- Identify the most likely root cause.
-- Use the best matching incident as evidence.
-- Extract root_cause_category.
-Pass everything to recurring_pattern_agent.
-""",
-            "tools": [
-                "recurring_pattern_agent"
-            ]
+                    "top_k": {
+                        "type": "int",
+                        "description": "Maximum number of matches to return."
+                    }
+                },
+                "required": ["incident_text"]
+            }
         },
-        {
-            "name": "recurring_pattern_agent",
-            "function": {
-                "description": "Checks whether the identified root cause is recurring.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "root_cause_category": {
-                            "type": "string",
-                            "description": "The category of the identified root cause, if known."
-                        },
-                        "context": {
-                            "type": "string",
-                            "description": "All prior analysis context to carry forward."
-                        }
+        "class": "incident_matcher.IncidentMatcher",
+        "args": { "top_k": 3 }
+    },
+
+    {
+        "name": "root_cause_suggestion_agent",
+        "function": {
+            "description": "Proposes the most likely root cause based on matched historical incidents, or flags a knowledge gap if no good match exists.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "incident_text": {
+                        "type": "string",
+                        "description": "The original incident description."
                     },
-                    "required": [
-                        "context"
-                    ]
-                }
-            },
-            "instructions": """
-If root_cause_category exists:
-Call pattern_counter.
-Capture:
-- count
-- window_days
-- recurrence status
-If it does not exist:
-Skip recurrence analysis.
-Pass all data to resolution_recommender_agent.
-""",
-            "tools": [
-                "pattern_counter",
-                "resolution_recommender_agent"
-            ]
+                    "matches": {
+                        "type": "string",
+                        "description": "The matches returned by similarity_retrieval_agent, as text."
+                    }
+                },
+                "required": ["incident_text", "matches"]
+            }
         },
-        {
-            "name": "pattern_counter",
-            "function": {
-                "description": "Counts historical occurrences of a root cause category.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "root_cause_category": {
-                            "type": "string",
-                            "description": "The root cause category to count occurrences of."
-                        }
+        "instructions": """
+            Look at the best match's similarity_score ONE TIME and decide immediately:
+
+            If below 0.4 or no matches: this is a KNOWLEDGE GAP. Conclusion: "Knowledge
+            Gap: No sufficiently similar past incidents found. Recommend creating a
+            new knowledge base article after this incident is resolved." Leave
+            root_cause_category empty.
+
+            Otherwise: propose the root cause, citing the matched incident_id(s) and
+            scores. Extract root_cause_category from the best match.
+
+            Do not deliberate further once you've decided. Immediately call
+            recurring_pattern_agent EXACTLY ONCE with the incident, matches, your
+            conclusion, and root_cause_category. Then output whatever it gives you
+            back, unchanged.
+        """,
+        "tools": ["recurring_pattern_agent"]
+    },
+
+    {
+        "name": "recurring_pattern_agent",
+        "function": {
+            "description": "Counts how often the identified root cause has occurred historically and flags recurring issues.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "root_cause_category": {
+                        "type": "string",
+                        "description": "The root cause category to check, or empty if a knowledge gap was flagged."
                     },
-                    "required": [
-                        "root_cause_category"
-                    ]
-                }
-            },
-            "class": "pattern_counter.PatternCounter"
+                    "context": {
+                        "type": "string",
+                        "description": "The incident, matches, and root cause conclusion so far, as text."
+                    }
+                },
+                "required": ["context"]
+            }
         },
-        {
-            "name": "resolution_recommender_agent",
-            "function": {
-                "description": "Creates the final operational recommendation package.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "context": {
-                            "type": "string",
-                            "description": "All prior analysis context to build the recommendation from."
-                        }
-                    },
-                    "required": [
-                        "context"
-                    ]
-                }
-            },
-            "instructions": """
-Prepare a recommendation package.
-Include:
-- Similar incident IDs
-- Root cause
-- Resolution
-- Responsible team
-- Estimated resolution time
-If recurrence analysis indicates a recurring issue:
-Add:
-This issue has occurred multiple times historically.
-A permanent fix is recommended.
-Pass the package to review_agent.
-""",
-            "tools": [
-                "review_agent"
-            ]
+        "instructions": """
+            If root_cause_category is empty (knowledge gap), skip straight to
+            calling resolution_recommender_agent with everything unchanged.
+
+            Otherwise, call pattern_counter EXACTLY ONCE with root_cause_category.
+            Do not call it again. Quote its returned count and window_days verbatim:
+            "This root cause has occurred exactly [count] times in the last
+            [window_days] days." If is_recurring is true, add "This is flagged as
+            RECURRING."
+
+            Immediately call resolution_recommender_agent EXACTLY ONCE with
+            everything gathered plus this statement. Then output whatever it gives
+            you back, unchanged.
+        """,
+        "tools": ["pattern_counter", "resolution_recommender_agent"]
+    },
+
+    {
+        "name": "pattern_counter",
+        "function": {
+            "description": "Counts historical occurrences of a given root cause category within a recurrence window. Runs fully locally.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "root_cause_category": {
+                        "type": "string",
+                        "description": "The root cause category to count occurrences of."
+                    }
+                },
+                "required": ["root_cause_category"]
+            }
         },
-        {
-            "name": "review_agent",
-            "function": {
-                "description": "Final review stage for the recommendation package.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "context": {
-                            "type": "string",
-                            "description": "The recommendation package to review and present."
-                        }
-                    },
-                    "required": [
-                        "context"
-                    ]
-                }
-            },
-            "instructions": """
-Present the results using this format:
-### Similar Incidents
-### Root Cause
-### Recurrence
-### Recommendation
-### Responsible Team
-### Estimated Resolution Time
-### Review Decision
-Approve
-Reject
-Needs SME Review
+        "class": "pattern_counter.PatternCounter"
+    },
 
-Ask the user which decision they choose.
-End the response after displaying the recommendation and the question.
-Do not call any additional tools.
-Do not ask any other follow-up questions.
-"""
+    {
+        "name": "resolution_recommender_agent",
+        "function": {
+            "description": "Compiles the resolution, responsible team, and estimated resolution time; recommends a permanent fix if the issue is recurring.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "type": "string",
+                        "description": "Everything gathered so far: incident, matches, root cause, recurrence status."
+                    }
+                },
+                "required": ["context"]
+            }
         },
-        {
-            "name": "human_approval_agent",
-            "function": {
-                "description": "Finalizes the workflow based on the human's approval decision.",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "decision": {
-                            "type": "string",
-                            "description": "The human's decision: Approve, Reject, or Needs SME Review."
-                        },
-                        "context": {
-                            "type": "string",
-                            "description": "A short summary of the recommendation the decision applies to."
-                        }
-                    },
-                    "required": [
-                        "decision"
-                    ]
-                }
-            },
-            "instructions": """
-You close out the PatternSight workflow based on the human's decision.
+        "instructions": """
+            If a knowledge gap was flagged, compile only the gap notice and a
+            recommendation to create a new KB article.
 
-Present the output using this format:
-### Final Recommendation
+            Otherwise, from the best match, extract: resolution steps, responsible
+            team, estimated resolution time. Include the recurrence statement word
+            for word - do not paraphrase it. If flagged RECURRING, add: "This is a
+            recurring issue. A permanent fix is recommended rather than a repeat
+            workaround."
 
-If decision is Approve:
-State that the recommendation is approved and will proceed to
-implementation by the responsible team.
+            Immediately call review_agent EXACTLY ONCE with this compiled package.
+            Then output whatever it gives you back, unchanged.
+        """,
+        "tools": ["review_agent"]
+    },
 
-If decision is Reject:
-State that the recommendation was rejected and should be routed back
-to a human analyst for manual reassessment.
+    {
+        "name": "review_agent",
+        "function": {
+            "description": "Presents the full recommendation package to a human reviewer before it is finalized.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "package": {
+                        "type": "string",
+                        "description": "The complete compiled recommendation package."
+                    }
+                },
+                "required": ["package"]
+            }
+        },
+        "instructions": """
+            Present the package once, using exactly these headers in order:
 
-If decision is Needs SME Review:
-State that the recommendation is flagged for Subject Matter Expert
-review before any implementation proceeds.
+            ### Similar Incidents
+            ### Root Cause
+            ### Recurrence
+            ### Recommendation
 
-Keep it to 2-3 sentences.
-Do not call any additional tools.
-Do not ask follow-up questions.
-This ends the PatternSight workflow.
-"""
-        }
-    ]
-}
+            Then, as the absolute LAST LINE, ask exactly:
+            "Do you approve this recommendation as-is, or would you like to correct
+            the root cause, responsible team, or resolution steps before it is
+            finalized?"
+            Nothing may come after this line. Do this once and stop.
+        """
+    }
+]
