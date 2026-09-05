@@ -1,7 +1,6 @@
 {
     # Networks created by `agent_network_designer` are written under registries/generated/.
     # The include keeps them visible to the server without editing this file by hand.
-    include "registries/generated/manifest.hocon",
 
     "patternsight/patternsight.hocon": true,
 
