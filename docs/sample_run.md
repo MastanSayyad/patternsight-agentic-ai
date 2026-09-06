@@ -12,7 +12,7 @@ the live demo can't complete on the day.
 **User:**
 > Batch job nightly_claims_load failed with a database connection timeout.
 
-<img width="1061" height="510" alt="image" src="https://github.com/user-attachments/assets/66045b6a-cb6f-4298-ae18-12fb5a6db564" />
+<img width="1061" height="510" alt="image" src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/patternsight-agent.gif" />
 
 **PatternSight:**
 > ### Similar Incidents
