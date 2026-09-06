@@ -6,68 +6,8 @@ earlier draft. If this ever drifts from the real file, the file is the source of
 
 ## High-Level Flow
 
-```
-                         USER MESSAGE
-                              │
-                              ▼
-                  ┌─────────────────────────┐
-                  │   ingestion_agent          │  ← front man / entry point
-                  │   (triage: A / B / C)      │
-                  └──────────────┬──────────────┘
-                                 │  (Case B only)
-                                 ▼
-                  ┌─────────────────────────┐
-                  │ similarity_retrieval_      │
-                  │  agent                     │
-                  └──────────────┬──────────────┘
-                                 │
-                         ┌───────┴───────┐
-                         ▼               │
-                ┌─────────────────┐      │
-                │ incident_matcher  │      │  (coded tool - TF-IDF, local)
-                └─────────────────┘      │
-                                 │◄───────┘
-                                 ▼
-                  ┌─────────────────────────┐
-                  │ root_cause_suggestion_     │
-                  │  agent                     │  ← Knowledge Gap decision point
-                  └──────────────┬──────────────┘
-                                 ▼
-                  ┌─────────────────────────┐
-                  │ recurring_pattern_agent    │
-                  └──────────────┬──────────────┘
-                                 │
-                         ┌───────┴───────┐
-                         ▼               │
-                ┌─────────────────┐      │
-                │ pattern_counter   │      │  (coded tool - date-window count, local)
-                └─────────────────┘      │
-                                 │◄───────┘
-                                 ▼
-                  ┌─────────────────────────┐
-                  │ resolution_recommender_    │
-                  │  agent                     │
-                  └──────────────┬──────────────┘
-                                 ▼
-                  ┌─────────────────────────┐
-                  │  review_agent              │  ← formats output, asks approval
-                  └──────────────┬──────────────┘
-                                 ▼
-                    RESULT RELAYED BACK VERBATIM
-                    THROUGH EVERY AGENT ABOVE
-                                 ▼
-                         USER SEES FINAL ANSWER
-                    ending in the approval question
-                                 │
-                                 ▼
-                  ┌─────────────────────────┐
-                  │  USER REPLIES ("approved")│
-                  └──────────────┬──────────────┘
-                                 ▼
-                  ingestion_agent Case C:
-                  confirms pending question existed,
-                  replies directly - NO re-run of the pipeline
-```
+<img width="1825" height="772" alt="Screenshot 2026-09-06 163159" src="https://github.com/user-attachments/assets/a90cf033-347c-4a50-84f0-0bb4bcd34358" />
+
 
 ## Agent Roster
 
