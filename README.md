@@ -115,7 +115,6 @@ patternsight-agentic-ai/
 
 ## Technology Stack </>
 
-
 - [Neuro SAN Studio](https://github.com/cognizant-ai-lab/neuro-san-studio)
 - [Neuro SAN](https://github.com/cognizant-ai-lab/neuro-san) Multi-Agent Orchestration
 - Python 3.11+
@@ -123,7 +122,6 @@ patternsight-agentic-ai/
 - scikit-learn TF-IDF, Cosine Similarity
 - Synthetic Insurance Incident Corpus
 - Gemini (Groq, Mistral through Neuro SAN LLM configurations and fallbacks.)
-
 
 ## Installation ⓘ
 
@@ -219,5 +217,3 @@ ns run
 - [README.md](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/README.md) - *Project overview*
 - [Project Summary](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Project_Summary.md) - *Project report including objectives, architecture, and outcomes*
 - [Sample Run](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/sample_run.md) - *Backup Run in case live LLM quota runs out*
-
-
