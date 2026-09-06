@@ -1,94 +1,35 @@
-### PatternSight Agentic Ai
-**Agentic Operational Memory & Prevention Network for Insurance Operations**
+![License](https://img.shields.io/badge/License-Apache%202.0-yellow?style=flat)
+![Team](https://img.shields.io/badge/Team-Tacet%20Discord-black?style=flat)
+[![Documentation](https://img.shields.io/badge/Documentation-Read%20Docs-blue?logo=read-the-docs&style=flat)](https://github.com/RevWorkForce-PES/P2-RevWorkForce/tree/main/docs)
 
-> **PatternSight transforms historical operational knowledge into actionable intelligence, helping insurance support teams resolve incidents faster and prevent recurring failures.**
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![NeuroSAN](https://img.shields.io/badge/Neuro%20SAN-4B32C3?style=for-the-badge)
+![HOCON](https://img.shields.io/badge/HOCON-543B2A?style=for-the-badge)
+![scikitlearn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
+![Mistral](https://img.shields.io/badge/Mistral%20AI-FA520F?style=for-the-badge)
+![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge)
+![uv](https://img.shields.io/badge/uv-DE5FE9?style=for-the-badge)
+![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 
-<!-- Built for the **Agentic AI Hackathon: Build with Neuro® AI Multi-Agent Accelerator (Neuro SAN)**
+## PatternSight Agentic Ai
 
+> **Transforms historical operational knowledge into actionable intelligence, helping insurance support teams resolve incidents faster and prevent recurring failures.**
+
+Built for the **Agentic AI Hackathon: Build with Neuro® AI Multi-Agent Accelerator (Neuro SAN)**
 - Team: **Tacet Discord**  
 -  Members: **Mastan Babu Sayyad**, **Gunashree B**
-- Track: **Track 2 - Vibe Coding + Grounding**  
-- Organizer: **Cognizant AI Lab (CAIL)** -->
+- Track: **Track 2**  
+- Organizer: [**Cognizant AI Lab (CAIL)**](https://github.com/cognizant-ai-lab)
 
-<!-- ## Overview
-
-Insurance support teams often spend significant time investigating production incidents, batch failures, claim-processing issues, and underwriting exceptions.
-
-Many of these issues have occurred before, but valuable operational knowledge remains scattered across:
-
+Insurance teams often spend significant time investigating production incidents, batch failures, claim-processing issues, and underwriting exceptions.Many of these issues have occurred before, but valuable operational knowledge remains scattered across:
 - Incident tickets
 - Support teams
 - Knowledge repositories
 - Individual SMEs
 
-As a result:
-
-- Similar incidents are repeatedly investigated from scratch
-- Resolution time increases
-- Institutional knowledge is difficult to retain
-- Recurring root causes remain unnoticed
-
 **PatternSight** addresses this challenge by acting as an **operational memory layer** that retrieves historical incidents, identifies recurring patterns, recommends resolutions, and supports human decision-making through a multi-agent workflow powered by Neuro SAN.
-
-
-
-# Problem Statement
-
-In insurance application support and operations, resolving production incidents requires searching historical tickets and knowledge repositories to determine:
-
-- What happened?
-- Has it happened before?
-- What was the root cause?
-- How was it fixed?
-- Who resolved it?
-
-This process is often manual, time-consuming, and highly dependent on experienced SMEs.
-
-
-
-# Solution
-
-PatternSight is a multi-agent incident intelligence and prevention system that:
-
-✅ Retrieves similar historical incidents
-
-✅ Suggests likely root causes
-
-✅ Identifies recurring operational patterns
-
-✅ Recommends resolutions
-
-✅ Identifies responsible support teams
-
-✅ Estimates resolution timelines
-
-✅ Includes human review before recommendations are finalized
-
-
-
-# Business Value
-
-### Reduce Investigation Time
-
-Surface similar incidents and previous resolutions instantly.
-
-### Reduce SME Dependency
-
-Provide junior support engineers with relevant historical context.
-
-### Detect Recurring Problems
-
-Identify chronic operational issues before they become larger failures.
-
-### Preserve Institutional Knowledge
-
-Convert scattered operational history into reusable organizational knowledge.
-
-### Improve Decision Making
-
-Provide grounded recommendations with supporting evidence.
-
-
 
 # High-Level Architecture
 
@@ -105,351 +46,169 @@ Resolution Recommender Agent
         ↓
 Review Agent (Human-in-the-Loop)
 ```
-
-
-
 # Agent Responsibilities
 
-## Ingestion Agent
+Agent Responsibilities
 
-Responsibilities:
-
-- Receive incoming incident description
-- Normalize incident information
-- Extract key details
-
-Example:
-
-```text
-Claim processing batch failed due to database timeout.
-```
+| Agent | Responsibility | Decides |
+|---|---|---|
+| **Ingestion Agent** | Normalizes the incoming incident description | Frontman, router/normalizer |
+| **Similarity Retrieval Agent** | Searches the synthetic historical corpus for similar past incidents | "Which past incidents look like this one?" |
+| **Root Cause Suggestion Agent** | Proposes the likely root cause, or flags a knowledge gap if no good match exists | "What probably caused this, and do we even have precedent?" |
+| **Recurring Pattern Agent** | Counts how often this root cause has occurred historically | "Is this a one-off or a chronic issue?" |
+| **Resolution Recommender Agent** | Extracts resolution steps, responsible team, ETA; recommends a permanent fix if recurring | "What fixed it before, who owns it, and does it need a permanent fix?" |
+| **Review Agent** | Human confirms before the recommendation is finalized | "Is this good enough to act on?" |
 
 
-
-## Similarity Retrieval Agent
-
-Responsibilities:
-
-- Search historical incident corpus
-- Find most relevant incidents
-- Return similarity scores
-
-Answers:
-
-```text
-Have we seen this before?
-```
-
-
-
-## Root Cause Suggestion Agent
-
-Responsibilities:
-
-- Analyze matched historical incidents
-- Suggest likely root cause
-- Flag knowledge gaps if no suitable match exists
-
-Answers:
-
-```text
-What most likely caused this issue?
-```
-
-
-
-## Recurring Pattern Agent
-
-Responsibilities:
-
-- Count historical occurrences
-- Detect recurring operational issues
-- Highlight chronic problem categories
-
-Answers:
-
-```text
-Is this a one-time event or recurring issue?
-```
-
-
-
-## Resolution Recommender Agent
-
-Responsibilities:
-
-- Retrieve previous resolutions
-- Recommend corrective actions
-- Identify support ownership
-- Estimate resolution timeline
-
-Answers:
-
-```text
-How was this fixed before?
-Who should resolve it?
-```
-
-
-
-## Review Agent
-
-Responsibilities:
-
-- Present recommendation package
-- Require human approval
-- Prevent automated acceptance of unsupported conclusions
-
-Answers:
-
-```text
-Is this recommendation ready for action?
-```
-
-
-
-# Technology Stack
-
-## Framework
-
-- Neuro SAN Studio
-- Neuro SAN Multi-Agent Orchestration
-
-## Language
-
-- Python 3.11+
-
-## Configuration
-
-- HOCON
-
-## Retrieval & Similarity
-
-- scikit-learn TF-IDF
-- Cosine Similarity
-
-Optional:
-
-- sentence-transformers embeddings
-
-## Data
-
-- Synthetic Insurance Incident Corpus
-- Markdown Knowledge Base
-
-## LLM Providers
-
-Designed to support:
-
-- Gemini
-- Groq
-- Mistral
-
-through Neuro SAN LLM configurations and fallbacks.
-
-
-
-# Repository Structure
+## Project Structure
 
 ```text
 patternsight-agentic-ai/
-├── README.md
-├── pyproject.toml
-├── .env
-├── .gitignore
+│
+├── README.md                           
+├── .gitignore                             
+├── .env.example                           # template - real keys go in .env (untracked)
+├── pyproject.toml                         
 │
 ├── config/
-│   └── llm_config.hocon
+│   └── llm_config.hocon                  
 │
 ├── registries/
-│   └── patternsight.hocon
+│   ├── manifest.hocon                     # root manifest - includes patternsight entry
+│   ├── aaosa.hocon                       
+│   ├── aaosa_basic.hocon                 
+│   ├── aaosa_basic_debug.hocon          
+│   ├── expertise_scoping_instructions.hocon  
+│   └── patternsight/
+│       ├── patternsight.hocon             # main agent network
+│       └── manifest.hocon                 
 │
 ├── coded_tools/
-│   ├── incident_matcher.py
-│   └── pattern_counter.py
+│   ├── __init__.py
+│   └── patternsight/
+│       ├── __init__.py
+│       ├── incident_matcher.py            # TF-IDF similarity search, validated live
+│       └── pattern_counter.py             # recurrence counting, validated live
 │
 ├── data/
-│   └── synthetic_incidents.json
-│
-├── kb/
-│   ├── db_connection_pool.md
-│   ├── message_queue_failure.md
-│   └── external_api_validation_gap.md
+│   └── synthetic_incidents.json            # fully synthetic
 │
 └── docs/
-    ├── architecture.md
-    ├── demo_script.md
-    └── project_summary.md
+    ├── architecture.md                    
+    ├── project_summary.md              
+    └── sample_run.md                                                   
 ```
 
+## Features
+
+| Feature | Description | Delivered By |
+|---|---|---|
+| **Historical Incident Retrieval** | Retrieves similar past incidents from a historical corpus using TF-IDF similarity search — grounded in real data, not guesswork. | `similarity_retrieval_agent` + `incident_matcher` (coded tool) |
+| **Root Cause Suggestion** | Proposes the most likely root cause based on matched precedent, explicitly citing which past incident(s) it's based on. | `root_cause_suggestion_agent` |
+| **Recurring Pattern Detection** | Counts how often a given root cause has occurred within a rolling time window and flags chronic, recurring issues. | `recurring_pattern_agent` + `pattern_counter` (coded tool) |
+| **Resolution Recommendation** | Recommends concrete resolution steps drawn from how the matched precedent was previously resolved. | `resolution_recommender_agent` |
+| **Responsible Team Identification** | Identifies which support team owns the resolution, based on historical precedent. | `resolution_recommender_agent` |
+| **Resolution Time Estimation** | Provides an estimated resolution time, drawn from the matched historical incident. | `resolution_recommender_agent` |
+| **Permanent Fix Guidance** | When an issue is flagged recurring, recommends a permanent structural fix instead of a repeat workaround. | `resolution_recommender_agent` |
+| **Human-in-the-Loop Review** | Presents the full recommendation and requires explicit human approval before anything is treated as final. | `review_agent` |
+
+## Technology Stack
+
+- Neuro SAN Studio
+- Neuro SAN Multi-Agent Orchestration
+- Python 3.11+
+- HOCON
+- scikit-learn TF-IDF, Cosine Similarity
+- Synthetic Insurance Incident Corpus
+- Gemini (Groq, Mistral through Neuro SAN LLM configurations and fallbacks.)
 
 
-# Setup
+## Installation ⓘ
 
-Create project:
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/MastanSayyad/patternsight-agentic-ai
+cd patternsight-agentic-ai
+```
+
+> [!NOTE]
+> If you don't have Git installed, you can download the ZIP file from the repository page.
+
+### Step 2: Prerequisites
+
+> [!IMPORTANT]
+> You need Python 3.11+ installed. We recommend [`uv`](https://docs.astral.sh/uv/) for
+> package and environment management, it's faster and more reliable than plain `pip`.
 
 ```bash
 uv init
-```
-
-Create virtual environment:
-
-```bash
 uv venv
 ```
 
-Activate environment:
+> [!TIP]
+> Don't have `uv`? Use the standard library instead:
+> ```bash
+> python -m venv .venv
+> ```
 
+### Step 3: Activate the Virtual Environment
+
+**Windows:**
 ```bash
 .venv\Scripts\activate
 ```
-
-Install Neuro SAN Studio:
-
+**macOS / Linux:**
 ```bash
-uv add neuro-san-studio
+source .venv/bin/activate
 ```
 
-Initialize Neuro SAN:
+### Step 4: Install Dependencies
+
+```bash
+uv add neuro-san-studio scikit-learn langchain-mistralai
+```
+### Step 5: Set Up Environment Variables
+
+Create `.env` and fill in your own API keys (Gemini, Mistral, Groq whichever you have).
+
+> [!WARNING]
+> Never commit your real `.env` file. It's already listed in `.gitignore`, but double-check.
+
+### Step 6: Initialize Neuro SAN
 
 ```bash
 ns init
 ```
 
-Verify configuration:
+> [!NOTE]
+> The `ns init` menu only offers OpenAI, Anthropic, and Gemini. Mistral and Groq aren't
+> Update manually `config/llm_config.hocon`.
 
-```bash
-ns check-config
-```
-
-Verify LLM setup:
+### Step 7: Verify Your Setup
 
 ```bash
 ns check-llm-keys
+ns check-config
 ```
 
-Import network:
+### Step 8: Validate the Network
 
 ```bash
-ns import
+ns validate registries/patternsight/patternsight.hocon --verbose
 ```
+This checks the HOCON structure and agent references without making any API calls or
+using any quota safe to run as often as you like.
 
-Run server:
+### Step 9: Run the Server
 
 ```bash
 ns run
 ```
 
+- Server: `http://localhost:8080`
+- nsflow UI: `http://localhost:4173`
 
 
-# Example Workflow
-
-Input:
-
-```text
-Claim processing batch failed due to database connection timeout.
-```
-
-PatternSight:
-
-1. Normalizes the incident
-2. Searches historical incidents
-3. Finds similar incidents
-4. Proposes root cause
-5. Checks recurrence frequency
-6. Recommends resolution
-7. Identifies ownership team
-8. Presents recommendation for review
-
-Output:
-
-```text
-Match Confidence: 92%
-
-Likely Root Cause:
-Database Connection Pool Exhaustion
-
-Occurrences:
-14 Historical Matches
-
-Recommended Resolution:
-Restart service and increase connection pool size
-
-Support Team:
-Middleware Support
-
-Estimated Resolution Time:
-2 Hours
-
-Status:
-Recurring Issue Detected
-```
-
-
-
-# Future Enhancements
-
-## Knowledge Graph Integration
-
-Replace file-based retrieval with graph-based reasoning.
-
-Possible technologies:
-
-- Neo4j
-- GraphRAG
-
-
-
-## Impact Analysis Agent
-
-Determine downstream business impact of incidents.
-
-Examples:
-
-- Claims processing delays
-- Underwriting disruption
-- Batch processing failures
-
-
-
-## Automated Knowledge Creation
-
-Generate new KB articles when previously unseen incidents are resolved.
-
-
-
-## Advanced Enterprise Deployments
-
-Support:
-
-- Azure OpenAI
-- Bedrock
-- Enterprise Knowledge Sources
-- Governance Workflows
-
-
-
-# Compliance
-
-This project uses:
-
-✅ Synthetic incident data
-
-✅ Synthetic knowledge base content
-
-✅ Open-source frameworks
-
-The solution does **not** use:
-
-❌ Production incidents
-
-❌ Customer data
-
-❌ Personal data (PII)
-
-❌ Confidential organizational information
-
-
- -->
 
 

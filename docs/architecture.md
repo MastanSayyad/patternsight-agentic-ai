@@ -1,9 +1,8 @@
-# PatternSight — Architecture (Final, Validated)
+# PatternSight Architecture
 
-This reflects the actual working `patternsight.hocon` — confirmed via live runs, not the
+This reflects the actual working `patternsight.hocon` confirmed via live runs, not the
 earlier draft. If this ever drifts from the real file, the file is the source of truth.
 
----
 
 ## High-Level Flow
 
@@ -130,5 +129,3 @@ anything is "finalized."
 
 - `config/llm_config.hocon` — fallback chain (Groq → Gemini → Mistral, reordered for speed
   on free tiers).
-- No AAOSA — this is a strict sequential pipeline; each agent has exactly one distinct job
-  and one downstream hand-off, so overlapping-scope delegation isn't the right tool here.
