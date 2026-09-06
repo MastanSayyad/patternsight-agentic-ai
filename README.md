@@ -22,19 +22,22 @@
 
 > **Transforms historical operational knowledge into actionable intelligence, helping insurance support teams resolve incidents faster and prevent recurring failures.**
 
-Built for the **Agentic AI Hackathon: Build with Neuro® AI Multi-Agent Accelerator (Neuro SAN)**
+Built for the **Agentic AI Hackathon: Build with [Neuro® AI](https://github.com/cognizant-ai-lab/neuro-san-studio) Multi-Agent Accelerator (Neuro SAN)**
 - Team: **Tacet Discord**  
 -  Members: **Mastan Babu Sayyad**, **Gunashree B**
 - Track: **Track 2**  
 - Organizer: [**Cognizant AI Lab (CAIL)**](https://github.com/cognizant-ai-lab)
 
-Insurance teams often spend significant time investigating production incidents, batch failures, claim-processing issues, and underwriting exceptions.Many of these issues have occurred before, but valuable operational knowledge remains scattered across:
-- Incident tickets
-- Support teams
-- Knowledge repositories
-- Individual SMEs
+## Overview
+Insurance teams often spend significant time investigating production incidents, batch failures, claim-processing issues, and underwriting exceptions.Many of these issues have occurred before, but valuable operational knowledge remains scattered across Incident tickets, Support teams, Knowledge repositories, Documentations and Individual SMEs
 
-**PatternSight** addresses this challenge by acting as an **operational memory layer** that retrieves historical incidents, identifies recurring patterns, recommends resolutions, and supports human decision-making through a multi-agent workflow powered by Neuro SAN.
+**PatternSight** addresses this challenge by acting as an **operational memory layer** that 
+- Retrieves similar historical incidents
+- Suggests likely root causes
+- Identifies recurring patterns
+- Recommends resolutions
+- Estimates resolution timelines
+and Supports human decision-making through a multi-agent workflow powered by [Neuro SAN](https://github.com/cognizant-ai-lab/neuro-san-studio).
 
 ## Architecture ⚙︎
 
