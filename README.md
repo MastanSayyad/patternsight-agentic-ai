@@ -1,10 +1,7 @@
 ![Release](https://img.shields.io/badge/Version-v0.1.0-white?logo=github&style=flat)
 
 <div align="center">
-<img width="400"alt="Rev WorkForce logo" src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/logo.gif"/>
-
-<br>
-<br>
+<img width="400"alt=" logo" src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Logo.gif"/>
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-yellow?style=flat)
 ![Team](https://img.shields.io/badge/Team-Tacet%20Discord-black?style=flat)
