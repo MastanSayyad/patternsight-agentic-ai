@@ -38,6 +38,11 @@ insurance support teams. Given a new incident description, it:
 
 ## Agent Architecture
 
+<p align="center">
+        <img src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/architecture-diagram.png">
+</p>
+
+
 | Agent | Role |
 |---|---|
 | `ingestion_agent` | Entry point; normalizes the incoming incident |
