@@ -115,8 +115,8 @@ patternsight-agentic-ai/
 
 ## Technology Stack </>
 
-- [Neuro SAN Studio](https://github.com/cognizant-ai-lab/neuro-san-studio)
 - [Neuro SAN](https://github.com/cognizant-ai-lab/neuro-san) Multi-Agent Orchestration
+- [Neuro SAN Studio](https://github.com/cognizant-ai-lab/neuro-san-studio)
 - Python 3.11+
 - HOCON
 - scikit-learn TF-IDF, Cosine Similarity
