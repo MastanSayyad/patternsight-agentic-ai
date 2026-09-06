@@ -40,20 +40,12 @@ Insurance teams often spend significant time investigating production incidents,
 and Supports human decision-making through a multi-agent workflow powered by [Neuro SAN](https://github.com/cognizant-ai-lab/neuro-san-studio).
 
 ## Architecture ⚙︎
+> This reflects the actual working `patternsight.hocon`
 
-```text
-Ingestion Agent
-        ↓
-Similarity Retrieval Agent
-        ↓
-Root Cause Suggestion Agent
-        ↓
-Recurring Pattern Agent
-        ↓
-Resolution Recommender Agent
-        ↓
-Review Agent (Human-in-the-Loop)
-```
+<p align="center">
+        <img src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/architecture-diagram.png">
+</p>
+
 ## Agent Responsibilities ᵎ!ᵎ
 
 | Agent | Responsibility | Decides |
