@@ -1,0 +1,19 @@
+[project]
+name = "patternsight-agentic-ai"
+version = "0.1.0"
+description = "A multi-agent agentic ai for insurance ops — retrieves similar past incidents, suggests root causes, flags recurring patterns, and recommends resolutions, gated by human review. Built on Cognizant's Neuro SAN framework."
+readme = "README.md"
+authors = [
+    { name = "Mastan Sayyad"}
+]
+requires-python = ">=3.13"
+dependencies = [
+    "scikit-learn>=1.9.0",
+]
+
+[project.scripts]
+patternsight-agentic-ai = "patternsight_agentic_ai:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"

@@ -5,3 +5,21 @@
         "thinking_level": "minimal"
     }
 }
+
+############################################################
+# LLM CONFIGURATION
+#
+# This section defines the Large Language Models (LLMs)
+# used by the agent workflow.
+#
+# Earlier we planned Fallback Order:
+#   1. Gemini
+#   2. Mistral
+#   3. Groq
+#
+# If a model fails due to quota exhaustion, network issues,
+# provider outage, timeout, invalid credentials, or service
+# unavailability, Neuro SAN automatically tries the next
+# configured provider in the list.
+# But due to system network limitation we had to update our model
+############################################################

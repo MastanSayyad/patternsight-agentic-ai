@@ -52,5 +52,4 @@ uv.lock
 # Agents config
 .agents/
 
-pyproject.toml
 .python-version
