@@ -1,16 +1,18 @@
-# PatternSight — Sample Run (Captured)
+# PatternSight Sample Run (Captured)
 
 This is a real, unedited transcript from a successful run against the current
 `patternsight.hocon` and `data/synthetic_incidents.json`. Kept here as a backup in case
-live LLM quota runs out during judging — this proves the system works end-to-end even if
+live LLM quota runs out during judging, this proves the system works end-to-end even if
 the live demo can't complete on the day.
 
-![image](patternsight-agentic-ai\docs\Neuro-San-Ui.png)
+![image](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Neuro-San-Ui.png)
 
 ## Turn 1: New Incident
 
 **User:**
 > Batch job nightly_claims_load failed with a database connection timeout.
+
+<img width="1061" height="510" alt="image" src="https://github.com/user-attachments/assets/66045b6a-cb6f-4298-ae18-12fb5a6db564" />
 
 **PatternSight:**
 > ### Similar Incidents
