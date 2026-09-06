@@ -217,3 +217,7 @@ ns run
 - [README.md](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/README.md) - *Project overview*
 - [Project Summary](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Project_Summary.md) - *Project report including objectives, architecture, and outcomes*
 - [Sample Run](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/sample_run.md) - *Backup Run in case live LLM quota runs out*
+
+---
+
+**Thank You!**
