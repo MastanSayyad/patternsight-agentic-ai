@@ -5,7 +5,7 @@
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-yellow?style=flat)
 ![Team](https://img.shields.io/badge/Team-Tacet%20Discord-black?style=flat)
-[![Documentation](https://img.shields.io/badge/Documentation-Read%20Docs-blue?logo=read-the-docs&style=flat)](https://github.com/RevWorkForce-PES/P2-RevWorkForce/tree/main/docs)
+[![Documentation](https://img.shields.io/badge/Documentation-Read%20Docs-blue?logo=read-the-docs&style=flat)](https://github.com/MastanSayyad/patternsight-agentic-ai/tree/main/docs)
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![NeuroSAN](https://img.shields.io/badge/Neuro%20SAN-4B32C3?style=for-the-badge)
@@ -119,8 +119,8 @@ patternsight-agentic-ai/
 
 ## Technology Stack
 
-- Neuro SAN Studio
-- Neuro SAN Multi-Agent Orchestration
+- [Neuro SAN Studio](https://github.com/cognizant-ai-lab/neuro-san-studio)
+- [Neuro SAN](https://github.com/cognizant-ai-lab/neuro-san) Multi-Agent Orchestration
 - Python 3.11+
 - HOCON
 - scikit-learn TF-IDF, Cosine Similarity
