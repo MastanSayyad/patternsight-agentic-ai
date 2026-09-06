@@ -15,6 +15,10 @@ the live demo can't complete on the day.
 <img width="1061" height="510" alt="image" src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/patternsight-agent.gif" />
 
 **PatternSight:**
+
+<img width="1215" height="735" alt="image" src="https://github.com/user-attachments/assets/c951e8b3-1234-4cce-b9c7-732ebb31e692" />
+
+
 > ### Similar Incidents
 > Best Match: INC-001 (Similarity score: 0.766)
 >
@@ -44,6 +48,7 @@ the live demo can't complete on the day.
 **PatternSight:**
 > Recommendation finalized and logged.
 
+<img width="1236" height="281" alt="image" src="https://github.com/user-attachments/assets/bf0ace5d-b741-4c4c-8488-4e6065d295cb" />
 
 ## What This Demonstrates
 
