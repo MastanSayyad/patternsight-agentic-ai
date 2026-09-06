@@ -3,9 +3,9 @@
 <div align="center">
 <img width="400"alt=" logo" src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Logo.gif"/>
 
-![License](https://img.shields.io/badge/License-Apache%202.0-yellow?style=flat)
 ![Team](https://img.shields.io/badge/Team-Tacet%20Discord-black?style=flat)
-[![Documentation](https://img.shields.io/badge/Documentation-Read%20Docs-blue?logo=read-the-docs&style=flat)](https://github.com/MastanSayyad/patternsight-agentic-ai/tree/main/docs)
+![Cognizant](https://img.shields.io/badge/Cognizant-blue?style=flat)
+[![Documentation](https://img.shields.io/badge/Documentation-Read%20Docs-yellow?logo=read-the-docs&style=flat)](https://github.com/MastanSayyad/patternsight-agentic-ai/tree/main/docs)
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![NeuroSAN](https://img.shields.io/badge/Neuro%20SAN-4B32C3?style=for-the-badge)
