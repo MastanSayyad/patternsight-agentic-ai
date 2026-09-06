@@ -10,12 +10,11 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![NeuroSAN](https://img.shields.io/badge/Neuro%20SAN-4B32C3?style=for-the-badge)
 ![HOCON](https://img.shields.io/badge/HOCON-543B2A?style=for-the-badge)
-![scikitlearn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![scikitlearn](https://img.shields.io/badge/scikit--learn-green?style=for-the-badge&logo=scikitlearn&logoColor=white)
 ![Gemini](https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
 ![Mistral](https://img.shields.io/badge/Mistral%20AI-FA520F?style=for-the-badge)
-![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge)
+![Groq](https://img.shields.io/badge/Groq-black?style=for-the-badge)
 ![uv](https://img.shields.io/badge/uv-DE5FE9?style=for-the-badge)
-![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 </div>
 
