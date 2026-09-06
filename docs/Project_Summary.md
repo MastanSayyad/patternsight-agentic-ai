@@ -2,7 +2,7 @@
 
 - **Team:** Tacet Discord (2 members)
 - **Event:** Agentic AI Hackathon - Build with Neuro® AI Multi-Agent Accelerator (neuro-san)
-- **Track:** Track 2 | Vibe Coding + Grounding
+- **Track:** Track 2
 - **Framework:** Neuro SAN Studio
 
 ## Problem Statement
@@ -57,6 +57,69 @@ agent-shaped configuration: each agent has a distinct decision to make (retrieve
 vs. count vs. recommend vs. approve), and the framework's agent-to-agent delegation is what
 lets each step hand off cleanly with its own scoped instructions and tools. including two
 custom Python coded tools integrated directly into the reasoning chain.
+
+## Project Structure 🗁
+
+```text
+patternsight-agentic-ai/
+│
+├── README.md                           
+├── .gitignore                             
+├── .env.example                           # template - real keys go in .env (untracked)
+├── pyproject.toml                         
+│
+├── config/
+│   └── llm_config.hocon                  
+│
+├── registries/
+│   ├── manifest.hocon                     # root manifest - includes patternsight entry
+│   ├── aaosa.hocon                       
+│   ├── aaosa_basic.hocon                 
+│   ├── aaosa_basic_debug.hocon          
+│   ├── expertise_scoping_instructions.hocon  
+│   └── patternsight/
+│       ├── patternsight.hocon             # main agent network
+│       └── manifest.hocon                 
+│
+├── coded_tools/
+│   ├── __init__.py
+│   └── patternsight/
+│       ├── __init__.py
+│       ├── incident_matcher.py            # TF-IDF similarity search, validated live
+│       └── pattern_counter.py             # recurrence counting, validated live
+│
+├── data/
+│   └── synthetic_incidents.json            # fully synthetic
+│
+└── docs/
+    ├── architecture.md                    
+    ├── project_summary.md              
+    └── sample_run.md                                                   
+```
+
+## Features ᵎ!ᵎ
+
+| Feature | Description | Delivered By |
+|---|---|---|
+| **Historical Incident Retrieval** | Retrieves similar past incidents from a historical corpus using TF-IDF similarity search — grounded in real data, not guesswork. | `similarity_retrieval_agent` + `incident_matcher` (coded tool) |
+| **Root Cause Suggestion** | Proposes the most likely root cause based on matched precedent, explicitly citing which past incident(s) it's based on. | `root_cause_suggestion_agent` |
+| **Recurring Pattern Detection** | Counts how often a given root cause has occurred within a rolling time window and flags chronic, recurring issues. | `recurring_pattern_agent` + `pattern_counter` (coded tool) |
+| **Resolution Recommendation** | Recommends concrete resolution steps drawn from how the matched precedent was previously resolved. | `resolution_recommender_agent` |
+| **Responsible Team Identification** | Identifies which support team owns the resolution, based on historical precedent. | `resolution_recommender_agent` |
+| **Resolution Time Estimation** | Provides an estimated resolution time, drawn from the matched historical incident. | `resolution_recommender_agent` |
+| **Permanent Fix Guidance** | When an issue is flagged recurring, recommends a permanent structural fix instead of a repeat workaround. | `resolution_recommender_agent` |
+| **Human-in-the-Loop Review** | Presents the full recommendation and requires explicit human approval before anything is treated as final. | `review_agent` |
+
+## Technology Stack </>
+
+
+- [Neuro SAN Studio](https://github.com/cognizant-ai-lab/neuro-san-studio)
+- [Neuro SAN](https://github.com/cognizant-ai-lab/neuro-san) Multi-Agent Orchestration
+- Python 3.11+
+- HOCON
+- scikit-learn TF-IDF, Cosine Similarity
+- Synthetic Insurance Incident Corpus
+- Gemini (Groq, Mistral through Neuro SAN LLM configurations and fallbacks.)
 
 ## Data & Compliance
 
