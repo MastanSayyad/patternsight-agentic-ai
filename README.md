@@ -1,3 +1,8 @@
+![Release](https://img.shields.io/badge/Version-v0.1.0-white?logo=github&style=flat)
+
+<div align="center">
+
+
 ![License](https://img.shields.io/badge/License-Apache%202.0-yellow?style=flat)
 ![Team](https://img.shields.io/badge/Team-Tacet%20Discord-black?style=flat)
 [![Documentation](https://img.shields.io/badge/Documentation-Read%20Docs-blue?logo=read-the-docs&style=flat)](https://github.com/RevWorkForce-PES/P2-RevWorkForce/tree/main/docs)
@@ -12,8 +17,9 @@
 ![uv](https://img.shields.io/badge/uv-DE5FE9?style=for-the-badge)
 ![JSON](https://img.shields.io/badge/JSON-000000?style=for-the-badge&logo=json&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+</div>
 
-## PatternSight Agentic Ai
+### PatternSight Agentic Ai [(Sample Run)](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/sample_run.md)
 
 > **Transforms historical operational knowledge into actionable intelligence, helping insurance support teams resolve incidents faster and prevent recurring failures.**
 
@@ -209,6 +215,13 @@ ns run
 - Server: `http://localhost:8080`
 - nsflow UI: `http://localhost:4173`
 
+![image](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Neuro-San-Ui.png)
 
+---
+
+**For more information, see:**
+- [README.md](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/README.md) - *Project overview*
+- [Project Summary](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Project_Summary.md) - *Project report including objectives, architecture, and outcomes*
+- [Sample Run](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/sample_run.md) - *Backup Run in case live LLM quota runs out*
 
 
