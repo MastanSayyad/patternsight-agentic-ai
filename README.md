@@ -18,7 +18,7 @@
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 </div>
 
-### PatternSight Agentic Ai [(Sample Run)](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/sample_run.md)
+### PatternSight Agentic Ai ✦ [(Sample Run)](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/sample_run.md)
 
 > **Transforms historical operational knowledge into actionable intelligence, helping insurance support teams resolve incidents faster and prevent recurring failures.**
 
@@ -36,7 +36,7 @@ Insurance teams often spend significant time investigating production incidents,
 
 **PatternSight** addresses this challenge by acting as an **operational memory layer** that retrieves historical incidents, identifies recurring patterns, recommends resolutions, and supports human decision-making through a multi-agent workflow powered by Neuro SAN.
 
-# High-Level Architecture
+## Architecture ⚙︎
 
 ```text
 Ingestion Agent
@@ -51,7 +51,7 @@ Resolution Recommender Agent
         ↓
 Review Agent (Human-in-the-Loop)
 ```
-# Agent Responsibilities
+## Agent Responsibilities ᵎ!ᵎ
 
 Agent Responsibilities
 
@@ -65,7 +65,7 @@ Agent Responsibilities
 | **Review Agent** | Human confirms before the recommendation is finalized | "Is this good enough to act on?" |
 
 
-## Project Structure
+## Project Structure 🗁
 
 ```text
 patternsight-agentic-ai/
@@ -104,7 +104,7 @@ patternsight-agentic-ai/
     └── sample_run.md                                                   
 ```
 
-## Features
+## Features ᵎ!ᵎ
 
 | Feature | Description | Delivered By |
 |---|---|---|
@@ -117,7 +117,8 @@ patternsight-agentic-ai/
 | **Permanent Fix Guidance** | When an issue is flagged recurring, recommends a permanent structural fix instead of a repeat workaround. | `resolution_recommender_agent` |
 | **Human-in-the-Loop Review** | Presents the full recommendation and requires explicit human approval before anything is treated as final. | `review_agent` |
 
-## Technology Stack
+## Technology Stack </>
+
 
 - [Neuro SAN Studio](https://github.com/cognizant-ai-lab/neuro-san-studio)
 - [Neuro SAN](https://github.com/cognizant-ai-lab/neuro-san) Multi-Agent Orchestration
