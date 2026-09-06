@@ -1,7 +1,10 @@
 ![Release](https://img.shields.io/badge/Version-v0.1.0-white?logo=github&style=flat)
 
 <div align="center">
+<img width="400"alt="Rev WorkForce logo" src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/logo.gif"/>
 
+<br>
+<br>
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-yellow?style=flat)
 ![Team](https://img.shields.io/badge/Team-Tacet%20Discord-black?style=flat)
@@ -53,8 +56,6 @@ Review Agent (Human-in-the-Loop)
 ```
 ## Agent Responsibilities ᵎ!ᵎ
 
-Agent Responsibilities
-
 | Agent | Responsibility | Decides |
 |---|---|---|
 | **Ingestion Agent** | Normalizes the incoming incident description | Frontman, router/normalizer |
@@ -64,6 +65,9 @@ Agent Responsibilities
 | **Resolution Recommender Agent** | Extracts resolution steps, responsible team, ETA; recommends a permanent fix if recurring | "What fixed it before, who owns it, and does it need a permanent fix?" |
 | **Review Agent** | Human confirms before the recommendation is finalized | "Is this good enough to act on?" |
 
+<p align="center">
+        <img src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/patternsight-agent.gif">
+</p>
 
 ## Project Structure 🗁
 
