@@ -29,7 +29,7 @@ Built for the **Agentic AI Hackathon: Build with [Neuro® AI](https://github.com
 - Organizer: [**Cognizant AI Lab (CAIL)**](https://github.com/cognizant-ai-lab)
 
 ## Overview
-Insurance teams often spend significant time investigating production incidents, batch failures, claim-processing issues, and underwriting exceptions.Many of these issues have occurred before, but valuable operational knowledge remains scattered across Incident tickets, Support teams, Knowledge repositories, Documentations and Individual SMEs
+Insurance teams often spend significant time investigating **production incidents, batch failures, claim-processing issues**, and **underwriting exception**s. Many of these issues have occurred before, but valuable operational knowledge remains scattered across Incident tickets, Support teams, Knowledge repositories, Documentations and Individual SMEs
 
 **PatternSight** addresses this challenge by acting as an **operational memory layer** that 
 - Retrieves similar historical incidents
@@ -40,7 +40,7 @@ Insurance teams often spend significant time investigating production incidents,
 and Supports human decision-making through a multi-agent workflow powered by [Neuro SAN](https://github.com/cognizant-ai-lab/neuro-san-studio).
 
 ## Architecture ⚙︎
-> This reflects the actual working `patternsight.hocon`
+> This reflects the actual working `patternsight.hocon` for more refer: [Architecture](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/architecture.md)
 
 <p align="center">
         <img src="https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/architecture-diagram.png">
@@ -211,13 +211,24 @@ ns run
 
 ![image](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Neuro-San-Ui.png)
 
+## Future Enhancements
+
+- Migrate from TF-IDF/local search to a true knowledge graph (e.g. Neo4j) modeling explicit
+  relationships between policies, claims, batch jobs, and incidents
+- Add an Impact Analysis agent mapping root-cause categories to downstream process impact
+- Auto-generate new knowledge base articles when a knowledge gap is resolved
+- Swap free-tier LLM access for a stronger model as budget allows
+
+### Team
+
+**Tacet Discord**
+- **Mastan Babu Sayyad:** Agents and Orchastration
+- **Gunashre B:** Data and Tools
+
 ---
 
 **For more information, see:**
 - [README.md](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/README.md) - *Project overview*
 - [Project Summary](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/Project_Summary.md) - *Project report including objectives, architecture, and outcomes*
 - [Sample Run](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/sample_run.md) - *Backup Run in case live LLM quota runs out*
-
----
-
-**Thank You!**
+- [Architecture.md](https://github.com/MastanSayyad/patternsight-agentic-ai/blob/main/docs/architecture.md) - *Detailed Architecture of the Agent Network*
